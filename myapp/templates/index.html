@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+<title>BinJer - Home</title>
+<style>
+  .fa-arrow-right{
+    animation: bounceX 3s ease-in-out infinite;
+  }
+
+  .fa-radiation{
+    animation: spin 2.5s backwards infinite;
+  }
+
+
+  @keyframes spin{
+  from {
+    -ms-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  to {
+    -ms-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+</style>
+<main class="p-4">
+  <div class="hero text-center">
+    {% if user.is_authenticated %}
+    <h1 class="theme-change-text text-dark">Welcome, <span class="text-primary">{{user.username}}</span></h1>
+    {% else %}
+    <h1 class="theme-change-text text-dark">Never miss out on work with <u><b style="color: coral;">BinJer</b></u></h1>
+    {% endif %}
+    <h5 class="theme-change-text text-dark">Organize your tasks and stay ahead on your day.</h5>
+    <br><br>
+    <p class="theme-change-text text-dark">A simple ToDo application to ease your planning</p>
+    <br><br>
+    <p class="text-muted"><i>Let's get you started with your ToDos</i>,</p>
+    <a href="/dashboard" class="btn" style="background: coral;">Go to Dashboard&nbsp;<i class="fas fa-arrow-right"></i></a>
+    <hr class="theme-change-div bg-light rounded">
+    <h4 class="theme-change-text mt-4 text-dark"><i>Happy <span class="text-primary"><b>{{day}}</b></span></i></h4>
+  </div>
+  
+</main>
+
+{% endblock %}
+

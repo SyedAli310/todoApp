@@ -1,0 +1,231 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" >
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" ></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous"></script>	
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- jQuery CDN -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Font Awesome Link -->
+    <link
+    rel="stylesheet"
+    href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+    integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ"
+    crossorigin="anonymous"
+    />
+
+
+    <style>
+        
+      @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+      body{
+        font-family: 'Poppins', sans-serif;
+        
+      }
+      .body-bg-change{
+        background: #1b1b1b;
+      }
+      .navbar{
+        border-bottom: 1px solid coral;
+        box-shadow: 0.5px 1px 12px #1b1b1b;
+      }
+        .nav-link{
+            color: coral !important;
+            transition: all ease 300ms;
+        }
+        .nav-item:hover{
+            filter: brightness(1.5);
+            background: rgb(255, 127, 80,0.5);
+            border-radius: 2.5px;
+        }
+        .nav-item:hover .nav-link{
+            transform:translateX(15px);
+            color: white !important;
+            
+        }
+        .navbar-brand{
+            color: white !important;
+        }
+        .navbar-brand:hover{
+            color: coral !important;
+        }
+        #logo{
+          transition: all ease 500ms;
+        }
+        #logo:hover{
+          transform: rotateZ(360deg);
+        }
+        @keyframes bounceX{
+          0% {
+            transform: translateX(0px);
+          }
+          12.5% {
+            transform: translateX(2.5px);
+          }
+          25% {
+            transform: translateX(0px);
+          }
+          50% {
+            transform: translateX(-2.5px);
+          }
+          100% {
+            transform: translateX(0px);
+          }
+        }
+        #dark-mode-btn:focus{
+          outline: none !important;
+          box-shadow: none !important;
+        }
+        #dark-mode-btn-container{
+          position: fixed;
+          top: 3.5em;
+          right: 25px;
+          background-color: #5A6268;
+          border-radius: 0px 0px 4px 4px !important;
+          border: 0.5px solid snow;
+          z-index: 100;
+        }
+    </style>            
+    <!-- <i class="fas fa-tasks fa-lg "></i> -->
+  </head>
+  <body>
+    <nav class="navbar sticky-top mb-5 navbar-expand-lg navbar-dark bg-dark px-4 d-flex justify-content-between">
+      <a class="navbar-brand d-flex align-items-center" href="/"><img id="logo" src="{% static 'img/logo.png' %}" alt="BinJer" style="height: 35px; width: 30px;">&nbsp;&nbsp;BinJer</a>
+      <button class="navbar-toggler btn btn-dark "  data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+          <i class="fas fa-hamburger text-white"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarText">
+          <ul class="w-100 navbar-nav mr-4 d-flex justify-content-end" style="gap:20px;">
+            <li><hr class="bg-secondary rounded"></li>            
+            <li class="nav-item">
+              <a class="nav-link" href="/">Home</a>
+            </li>
+            <li class="nav-item">
+              {% if user.is_authenticated %}
+              <a class="nav-link" href="/dashboard/">Dashboard</a>
+              {% else %}
+              <a class="nav-link" href="#">Features</a>
+              {% endif %}
+            </li>
+            <li class="nav-item">
+              {% if user.is_authenticated %}
+              <a class="nav-link" href="#"><i class="fas fa-user-alt">&nbsp;{{user.username}}</i></a>
+              {% else %}
+              <a class="nav-link" href="/pricing">Pricing</a>
+              {% endif %}
+            </li>
+            <li><hr class="bg-secondary rounded"></li>
+          </ul>
+          <span class="navbar-buttons d-flex justify-content-center align-items-center">
+            {% if user.is_authenticated %}
+            <a href="/logout" class="btn btn-danger btn-sm"><i class="fas fa-sign-out-alt">&nbsp;Signout</i></a>
+            {% else %}
+            <a href="/login" class="btn btn-outline-success btn-sm" style="color: white !important;">Login/Signup</a>
+            {% endif %}
+          </span>
+        </div>
+    </nav>
+
+    <div id="dark-mode-btn-container">
+      <button class="btn btn-sm" id="dark-mode-btn"><i class="fas fa-moon"></i></button>
+    </div>
+
+    {% block content %}
+
+
+    {% endblock %}
+    
+    <footer class="px-4 mt-5 mb-2 text-center">
+      <i class="far fa-copyright text-muted">-BinJer -2021</i>
+      <br>
+      <p class="text-muted">Built in - <span style="opacity: 0.8;"><a  class="text-success" href="https://www.djangoproject.com/" target="_blank">django</a></span></p>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    
+    <script>
+      $(document).ready(()=>{
+
+        $('.navbar-toggler').on('click',()=>{
+            $('.fa-hamburger').toggleClass('fa-times')
+        })
+
+        $(function () {
+          $('[data-toggle="tooltip"]').tooltip()
+        })
+
+
+        function changeTheme(){
+            const divs = document.querySelectorAll('.theme-change-div');
+            const texts = document.querySelectorAll('.theme-change-text');
+            const icons = document.querySelectorAll('.theme-change-icon');
+
+
+            $('body').toggleClass('body-bg-change')
+            
+            for(let i=0; i<divs.length;i++){
+              divs[i].classList.toggle('bg-dark');
+            }
+            for(let i=0; i<texts.length;i++){
+              texts[i].classList.toggle('text-white');   
+              texts[i].classList.toggle('text-dark');   
+            }
+            for(let i=0; i<icons.length;i++){
+              icons[i].classList.toggle('text-light');
+                
+            }
+        }
+
+        $('#dark-mode-btn').on('click',()=>{ 
+
+            $('#dark-mode-btn i').toggleClass('fa-sun fa-moon')
+            
+            changeTheme()
+
+            if($('#dark-mode-btn i').hasClass('fa-sun')){
+              localStorage.setItem('isDark','false');
+            }
+            if($('#dark-mode-btn i').hasClass('fa-moon')){
+              localStorage.setItem('isDark','true');
+            }
+        })
+
+
+        function checkTheme(){
+          if(localStorage.getItem('isDark')=='true'){
+            
+            changeTheme();
+            $('#dark-mode-btn i').removeClass('fa-sun')
+            $('#dark-mode-btn i').addClass('fa-moon')
+          }
+          else{
+            
+            $('#dark-mode-btn i').toggleClass('fa-moon fa-sun')
+          }
+        }
+
+        window.onload=checkTheme();
+
+      $(".dropdown-menu li a").click(function () {
+        localStorage.setItem("filter", $(this).text());
+      });
+      
+      window.onload = () => {
+        $("#filter-val").text(localStorage.getItem("filter"));
+        console.log("filter:", localStorage.getItem("filter"));
+      };
+
+      })
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,477 @@
+{% extends 'base.html' %} {% block content %}
+
+{% load static %}
+
+<style>
+  .select-css {
+    box-sizing: border-box;
+    display: block;
+    font-size: 16px;
+    font-family: "Archivo", sans-serif;
+    color: #191f1c;
+    line-height: 20px;
+    padding: 5px 25px 5px 10px;
+    width: 100%;
+    max-width: 230px;
+    height: 40px;
+    border-radius: 0;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+    background-color: #ffffff;
+    background-image: url("data:image/svg+xml,%3Csvg style='display: block;' focusable='false' width='12' height='8' fill='none' xmlns='http://www.w3.org/2000/svg' alt=''%3E%3Cpath d='M1.41 0.589996L6 5.17L10.59 0.589996L12 2L6 8L0 2L1.41 0.589996Z' fill='%23191F1C'/%3E%3C/svg%3E"),
+      linear-gradient(to bottom, #ffffff 0%, #ffffff 100%);
+    background-repeat: no-repeat, repeat;
+    background-position: right 0.7em top 50%, 0 0;
+    background-size: 0.65em auto, 100%;
+  }
+
+  .select-css::-ms-expand {
+    display: none;
+  }
+
+  .select-css:focus {
+    border: none;
+    outline: none;
+  }
+
+  .select-css option {
+    font-weight: normal;
+    background: #191f1c;
+    color: white;
+    margin-top: 15px;
+  }
+
+  /* Disabled styles */
+  .select-css:disabled,
+  .select-css[aria-disabled="true"] {
+    color: #4f4f4f;
+    background-image: url("data:image/svg+xml,%3Csvg style='display: block;' focusable='false' width='12' height='8' fill='none' xmlns='http://www.w3.org/2000/svg' alt=''%3E%3Cpath d='M1.41 0.589996L6 5.17L10.59 0.589996L12 2L6 8L0 2L1.41 0.589996Z' fill='%23191F1C'/%3E%3C/svg%3E"),
+      linear-gradient(to bottom, #ededed 0%, #ededed 100%);
+    border-color: #c8c8c8;
+  }
+
+  .err {
+    animation: disappear 1s ease forwards 3s;
+  }
+
+  @keyframes disappear {
+    to {
+      opacity: 0;
+      visibility: hidden;
+      display: none;
+    }
+  }
+  .todo-container{
+      /* background: rgb(135, 206, 250); */
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' version='1.1' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns:svgjs='http://svgjs.com/svgjs' width='1440' height='1078' preserveAspectRatio='none' viewBox='0 0 1440 1078'%3e%3cg mask='url(%26quot%3b%23SvgjsMask1052%26quot%3b)' fill='none'%3e%3crect width='1440' height='1078' x='0' y='0' fill='%230e2a47'%3e%3c/rect%3e%3cuse xlink:href='%23SvgjsSymbol1059' x='0' y='0'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsSymbol1059' x='0' y='720'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsSymbol1059' x='720' y='0'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsSymbol1059' x='720' y='720'%3e%3c/use%3e%3c/g%3e%3cdefs%3e%3cmask id='SvgjsMask1052'%3e%3crect width='1440' height='1078' fill='white'%3e%3c/rect%3e%3c/mask%3e%3cpath d='M-1 0 a1 1 0 1 0 2 0 a1 1 0 1 0 -2 0z' id='SvgjsPath1053'%3e%3c/path%3e%3cpath d='M-3 0 a3 3 0 1 0 6 0 a3 3 0 1 0 -6 0z' id='SvgjsPath1058'%3e%3c/path%3e%3cpath d='M-5 0 a5 5 0 1 0 10 0 a5 5 0 1 0 -10 0z' id='SvgjsPath1054'%3e%3c/path%3e%3cpath d='M2 -2 L-2 2z' id='SvgjsPath1056'%3e%3c/path%3e%3cpath d='M6 -6 L-6 6z' id='SvgjsPath1057'%3e%3c/path%3e%3cpath d='M30 -30 L-30 30z' id='SvgjsPath1055'%3e%3c/path%3e%3c/defs%3e%3csymbol id='SvgjsSymbol1059'%3e%3cuse xlink:href='%23SvgjsPath1053' x='30' y='30' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1054' x='30' y='90' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1055' x='30' y='150' stroke='%231c538e' stroke-width='3'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1055' x='30' y='210' stroke='%231c538e' stroke-width='3'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1056' x='30' y='270' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1056' x='30' y='330' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1057' x='30' y='390' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1053' x='30' y='450' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1053' x='30' y='510' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1054' x='30' y='570' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1053' x='30' y='630' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1054' x='30' y='690' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1054' x='90' y='30' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1057' x='90' y='90' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1057' x='90' y='150' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1054' x='90' y='210' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1058' x='90' y='270' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1053' x='90' y='330' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1058' x='90' y='390' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1056' x='90' y='450' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1055' x='90' y='510' stroke='%231c538e' stroke-width='3'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1057' x='90' y='570' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1058' x='90' y='630' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1054' x='90' y='690' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1057' x='150' y='30' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1053' x='150' y='90' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1057' x='150' y='150' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1056' x='150' y='210' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1056' x='150' y='270' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1058' x='150' y='330' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1054' x='150' y='390' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1053' x='150' y='450' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1053' x='150' y='510' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1057' x='150' y='570' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1053' x='150' y='630' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1054' x='150' y='690' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1057' x='210' y='30' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1054' x='210' y='90' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1057' x='210' y='150' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1053' x='210' y='210' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1056' x='210' y='270' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1057' x='210' y='330' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1054' x='210' y='390' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1057' x='210' y='450' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1054' x='210' y='510' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1054' x='210' y='570' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1058' x='210' y='630' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1057' x='210' y='690' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1054' x='270' y='30' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1054' x='270' y='90' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1057' x='270' y='150' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1054' x='270' y='210' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1053' x='270' y='270' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1054' x='270' y='330' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1057' x='270' y='390' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1056' x='270' y='450' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1054' x='270' y='510' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1054' x='270' y='570' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1054' x='270' y='630' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1057' x='270' y='690' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1054' x='330' y='30' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1054' x='330' y='90' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1056' x='330' y='150' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1057' x='330' y='210' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1057' x='330' y='270' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1057' x='330' y='330' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1054' x='330' y='390' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1054' x='330' y='450' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1057' x='330' y='510' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1056' x='330' y='570' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1055' x='330' y='630' stroke='%231c538e' stroke-width='3'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1057' x='330' y='690' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1057' x='390' y='30' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1054' x='390' y='90' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1055' x='390' y='150' stroke='%231c538e' stroke-width='3'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1057' x='390' y='210' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1058' x='390' y='270' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1054' x='390' y='330' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1054' x='390' y='390' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1054' x='390' y='450' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1054' x='390' y='510' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1056' x='390' y='570' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1057' x='390' y='630' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1053' x='390' y='690' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1056' x='450' y='30' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1057' x='450' y='90' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1054' x='450' y='150' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1054' x='450' y='210' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1056' x='450' y='270' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1054' x='450' y='330' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1053' x='450' y='390' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1054' x='450' y='450' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1054' x='450' y='510' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1054' x='450' y='570' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1054' x='450' y='630' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1058' x='450' y='690' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1057' x='510' y='30' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1054' x='510' y='90' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1057' x='510' y='150' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1056' x='510' y='210' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1054' x='510' y='270' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1057' x='510' y='330' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1057' x='510' y='390' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1053' x='510' y='450' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1058' x='510' y='510' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1054' x='510' y='570' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1054' x='510' y='630' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1054' x='510' y='690' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1057' x='570' y='30' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1054' x='570' y='90' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1057' x='570' y='150' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1054' x='570' y='210' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1054' x='570' y='270' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1054' x='570' y='330' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1055' x='570' y='390' stroke='%231c538e' stroke-width='3'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1058' x='570' y='450' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1053' x='570' y='510' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1056' x='570' y='570' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1054' x='570' y='630' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1058' x='570' y='690' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1057' x='630' y='30' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1054' x='630' y='90' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1058' x='630' y='150' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1057' x='630' y='210' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1053' x='630' y='270' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1054' x='630' y='330' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1055' x='630' y='390' stroke='%231c538e' stroke-width='3'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1054' x='630' y='450' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1055' x='630' y='510' stroke='%231c538e' stroke-width='3'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1053' x='630' y='570' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1055' x='630' y='630' stroke='%231c538e' stroke-width='3'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1054' x='630' y='690' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1057' x='690' y='30' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1058' x='690' y='90' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1053' x='690' y='150' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1054' x='690' y='210' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1058' x='690' y='270' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1054' x='690' y='330' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1054' x='690' y='390' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1053' x='690' y='450' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1055' x='690' y='510' stroke='%231c538e' stroke-width='3'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1054' x='690' y='570' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1056' x='690' y='630' stroke='%231c538e'%3e%3c/use%3e%3cuse xlink:href='%23SvgjsPath1057' x='690' y='690' stroke='%231c538e'%3e%3c/use%3e%3c/symbol%3e%3c/svg%3e");      background-repeat: no-repeat;
+    background-size: cover;
+    }
+  #todo {
+    position: relative;
+    border: 1.5px solid #343a40;
+    transition: all ease 300ms;
+  }
+  #todo:hover {
+    border: 1.5px solid #72aeeb;
+  }
+  #todo:hover > #abs-status {
+    transform: rotateZ(-360deg) scale(1.5);
+  }
+  #abs-status {
+    position: absolute;
+    top: -20px;
+    left: -20px;
+    /* background-color: rgb(27, 27, 27, 0.75); */
+    padding: 5px;
+    border-radius: 4px;
+    transition: all ease-in-out 700ms 0.5s;
+  }
+
+#clock-svg{
+    height:50px !important;
+    width: 50px !important;
+}
+
+#todo:hover #clock-svg #clock #second-hand{
+    transform-origin: 50% 50%;
+    animation: spin 10s  forwards infinite 1.5s;
+}
+#todo:hover #clock-svg #clock #minute-hand{
+    transform-origin: 50% 50%;
+    animation: spin 60s  forwards infinite 1.5s;
+}
+
+@keyframes spin {
+    to{
+        transform: rotateZ(360deg);
+    }
+}
+
+#check-svg{
+    height: 50px;
+    width: 50px;
+}
+
+#todo:hover #check-svg #check #tick{
+    animation: appear 3s ease-in-out  forwards infinite 1.5s;
+} 
+
+@keyframes appear {
+    from{
+        opacity: 0;
+        visibility: hidden;
+        
+    }
+    to {
+      opacity: 1;
+      visibility: visible;
+      
+    }
+  }
+</style>
+
+{% if user.is_authenticated %}
+<title>Dashboard - {{user.username}}</title>
+{% else %}
+<title>BinJer - Dashboard</title>
+{% endif %}
+
+<main class="px-4">
+  <div class="hero">
+    {% if user.is_authenticated %} {% for message in messages %}
+    <h4 class="text-center text-danger err">
+      <i class="fas fa-info-circle fa-sm"></i>&nbsp;{{message}}
+    </h4>
+    {% endfor %}
+    <h4 class="theme-change-text text-dark">
+      Welcome,
+      <span class="text-primary">{{user.username}}</span>&nbsp;/&nbsp;<span
+        class="text-muted small"
+        >Happy&nbsp;<span class="text-warning">{{day}}</span></span
+      >
+    </h4>
+    <hr class="bg-secondary rounded" />
+    <div
+      class="text-dark d-flex justify-content-between align-items-baseline mt-2"
+    >
+      <div>
+        <button
+          type="button"
+          class="btn btn-success btn-sm"
+          data-toggle="modal"
+          data-target=".bd-example-modal-lg"
+        >
+          <i class="fas fa-plus-circle fa-md">&nbsp;Add</i>
+        </button>
+        <!-- <a href="#" class="btn btn-secondary btn-sm">Clear</a> -->
+        <!-- <a href="#" class="btn btn-secondary btn-sm">Clear Completed</a> -->
+      </div>
+      &nbsp;
+      <div>
+        <div class="input-group mb-3">
+          <input
+            type="search"
+            class="form-control form-control-sm"
+            name="searchTodo"
+            id="searchTodo"
+            placeholder="Search todo"
+            aria-label="Search todo"
+            aria-describedby="button-addon2"
+          />
+          <div class="input-group-append">
+            <button
+              class="btn btn-primary btn-sm"
+              id="to-text-button"
+              type="submit"
+            >
+              <i class="fas fa-search"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="
+        text-light text-center
+        py-2
+        px-2
+        mb-0
+        rounded-top
+        d-flex
+        justify-content-between
+        align-items-center
+        bg-dark
+      "
+    >
+      <span><h3 class="my-auto">To-Dos</h3></span>
+
+      <div class="dropdown">
+        <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+          Filter : 
+          {% if 'order' in request.session %}
+          <span id="filter-val"></span>
+          {% else %} 
+          None 
+          {% endif %}
+        </button>
+        <ul
+          class="dropdown-menu"
+          aria-labelledby="dropdownMenuButton1"
+          style="background: #1b1b1b; border: 1px solid snow"
+        >
+          <li class="border-bottom border-secondary">
+            <a class="dropdown-item text-primary" href="/dashboard/newest/"
+              >Newest</a
+            >
+          </li>
+          <li class="border-bottom border-secondary">
+            <a class="dropdown-item text-primary" href="/dashboard/pending/"
+              >Pending</a
+            >
+          </li>
+          <li>
+            <a class="dropdown-item text-primary" href="/dashboard/priority/"
+              >Priority</a
+            >
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div
+      class="
+        todo-container
+        w-100
+        mt-0
+        mb-4
+        py-4
+        px-2
+        rounded-bottom
+        d-flex
+        justify-content-center
+        flex-wrap
+      "
+      style="gap: 1.25em; min-height: 50vh; height: auto"
+    >
+      {% if todos.exists %} {% for todo in todos %}
+      <div
+        class="theme-change-div bg-light theme-change-text text-dark rounded  my-auto py-3 px-4 text-center"
+        id="todo"
+      >
+        {% if todo.status == 'Pending' %}
+        <span class="text-danger" id="abs-status">
+            <!-- <i class="fas fa-hourglass-half fa-2x"></i> -->
+            <svg id="clock-svg" width="745" height="720" viewBox="0 0 745 720" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g id="clock">
+                <path id="Vector" d="M372.5 720C578.226 720 745 558.823 745 360C745 161.177 578.226 0 372.5 0C166.774 0 0 161.177 0 360C0 558.823 166.774 720 372.5 720Z" fill="url(#paint0_linear)"/>
+                <path id="Vector_2" d="M372.5 720C574.912 720 739 561.509 739 366C739 170.491 574.912 12 372.5 12C170.088 12 6 170.491 6 366C6 561.509 170.088 720 372.5 720Z" fill="#FF7F50"/>
+                <path id="Vector_3" d="M372.5 647C533.491 647 664 521.192 664 366C664 210.808 533.491 85 372.5 85C211.509 85 81 210.808 81 366C81 521.192 211.509 647 372.5 647Z" fill="#091022"/>
+                <path id="second-hand" d="M381 135H364V383H381V135Z" fill="#B92020"/>
+                <g id="Group" opacity="0.1">
+                <path id="Vector_4" opacity="0.1" d="M622.487 360.204H389.931V380.082H622.487V360.204Z" fill="black"/>
+                <path id="Vector_5" opacity="0.1" d="M225.745 285.833L216.197 303.443L362.524 377.457L372.071 359.848L225.745 285.833Z" fill="black"/>
+                <path id="Vector_6" opacity="0.1" d="M372.438 399.96C389.487 399.96 403.308 386.611 403.308 370.143C403.308 353.675 389.487 340.326 372.438 340.326C355.389 340.326 341.568 353.675 341.568 370.143C341.568 386.611 355.389 399.96 372.438 399.96Z" fill="black"/>
+                </g>
+                <path id="minute-hand" d="M622 356H390V376H622V356Z" fill="white"/>
+                <path id="hour-hand" d="M372.139 355.895L225.812 281.881L216.265 299.49L362.591 373.505L372.139 355.895Z" fill="white"/>
+                <path id="Vector_7" d="M372.5 396C389.345 396 403 382.569 403 366C403 349.431 389.345 336 372.5 336C355.655 336 342 349.431 342 366C342 382.569 355.655 396 372.5 396Z" fill="#0B1380"/>
+                <g id="Group_2" opacity="0.1">
+                <path id="Vector_8" opacity="0.1" d="M103.638 388.07C103.638 232.722 234.013 106.793 394.847 106.793C439.989 106.754 484.52 116.869 524.913 136.335C565.307 155.802 600.452 184.085 627.567 218.946C578.01 131.959 482.312 73 372.209 73C211.375 73 81.0003 198.929 81.0003 354.277C80.9057 415.305 101.455 474.692 139.52 523.401C115.914 481.944 103.569 435.384 103.638 388.07V388.07Z" fill="black"/>
+                </g>
+                </g>
+                <defs>
+                <linearGradient id="paint0_linear" x1="372.5" y1="720" x2="372.5" y2="0" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#808080" stop-opacity="0.25"/>
+                <stop offset="0.54" stop-color="#808080" stop-opacity="0.12"/>
+                <stop offset="1" stop-color="#808080" stop-opacity="0.1"/>
+                </linearGradient>
+                </defs>
+            </svg>
+        </span>
+        {% elif todo.status == 'Completed' %}
+        <span class="text-success" id="abs-status">
+            <svg id="check-svg" width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g id="check">
+                <path id="Vector" d="M50 100C77.6142 100 100 77.6142 100 50C100 22.3858 77.6142 0 50 0C22.3858 0 0 22.3858 0 50C0 77.6142 22.3858 100 50 100Z" fill="#091022"/>
+                <path id="tick" d="M41.375 72.3749L19.868 50.8679L25.9 44.8349L41.395 60.3299L74.1 27.6249L80.132 33.6579L41.375 72.3749Z" fill="#FF7F50"/>
+                </g>
+              </svg>
+        </span>
+        {% endif %}
+
+        <div
+          class="
+            d-flex
+            justify-content-around
+            align-items-center
+            bg-secondary
+            rounded
+            mb-4
+          "
+          style="min-width: 20vw !important"
+        >
+          <p class="text-light my-2">
+            Priority -
+            <span class="px-2 badge badge-dark badge-pill text-white"
+              >{{todo.priority}}</span
+            >
+          </p>
+          &nbsp;
+          <div class="text-light my-2">
+            {% if todo.status == 'Pending' %}
+            <span class="text-danger"
+              ><i class="fas fa-hourglass-half fa-lg"></i
+            ></span>
+            {% elif todo.status == 'Completed' %}
+            <span class="text-success"
+              ><i class="fas fa-check-double fa-lg"></i
+            ></span>
+            {% endif %} {{todo.status}}
+          </div>
+        </div>
+
+        {% if todo.status == 'Pending' %}
+        <h2>{{todo.title}}</h2>
+        {% elif todo.status == 'Completed' %}
+        <h2 class="text-muted">{{todo.title}}</h2>
+        {% endif %}
+
+        <p class="text-secondary text-right mt-4">{{todo.date}}</p>
+        <hr class="bg-secondary rounded" />
+        <div
+          class="d-flex justify-content-center align-items-center"
+          style="gap: 10px"
+        >
+          <a
+            href="/delete_todo/{{todo.id}}"
+            class="btn text-danger"
+            title="Delete ToDo"
+            ><i class="fas fa-trash-alt"></i
+          ></a>
+          {% if todo.status == 'Pending' %}
+          <a
+            href="/change_status/{{todo.id}}/Completed"
+            class="btn text-success"
+            title="Mark Completed"
+            ><i class="fas fa-check-circle"></i
+          ></a>
+          {% elif todo.status == 'Completed' %}
+          <a
+            href="/change_status/{{todo.id}}/Pending"
+            class="btn text-primary"
+            title="Mark Pending"
+            ><i class="fas fa-clock"></i
+          ></a>
+          {% endif %}
+          <a
+            href="#"
+            class="btn text-secondary"
+            ><i class="far fa-edit"></i
+          ></a>
+        </div>
+      </div>
+      {% endfor %} {% else %}
+      <h2 class="text-danger text-center my-auto">No tasks are added</h2>
+      {% endif %}
+    </div>
+
+    <div
+      class="modal fade bd-example-modal-lg"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="myLargeModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-lg shadow rounded">
+        <div class="theme-change-div modal-content bg-light">
+          <div class="modal-header">
+            <h2
+              class="modal-title text-center text-primary"
+              id="exampleModalLabel"
+            >
+              Add ToDo
+            </h2>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+              style="outline: none; border:none; "
+            >
+              <i class="fas fa-times fa-lg"></i>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form action="/add_todo/" method="POST" class="bg-dark p-4 rounded">
+              {% csrf_token %}
+              <div class="mb-3">
+                <input
+                  type="text"
+                  name="title"
+                  class="form-control form-control-lg"
+                  id="inputTodo"
+                  placeholder="Enter ToDo"
+                  required
+                />
+              </div>
+              <br />
+              <div
+                class="d-flex justify-content-around align-items-center mb-3"
+              >
+                <select
+                  class="form-select select-css rounded"
+                  name="status"
+                  id="floatingSelectGrid"
+                  aria-label="Select Status"
+                  required
+                >
+                  <option selected>Select Status</option>
+                  <option value="Completed">Completed</option>
+                  <option value="Pending">Pending</option>
+                </select>
+                &nbsp;
+                <select
+                  class="form-select select-css rounded"
+                  name="priority"
+                  id="floatingSelectGrid2"
+                  aria-label="Select Priority"
+                  required
+                >
+                  <option selected>Select Priority</option>
+                  <option value="1">1️⃣</option>
+                  <option value="2">2️⃣</option>
+                  <option value="3">3️⃣</option>
+                  <option value="4">4️⃣</option>
+                  <option value="5">5️⃣</option>
+                </select>
+              </div>
+              <br />
+              <div
+                class="
+                  modal-footer
+                  d-flex
+                  justify-content-center
+                  align-items-end
+                "
+              >
+                <input type="submit" value="Add ToDo" class="btn btn-success" />
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {% else %}
+    <div class="text-center">
+      <h1 class="text-dark">Signin to views your ToDos</h1>
+      <a href="/login" class="btn btn-primary">Signin</a>
+    </div>
+    {% endif %}
+  </div>
+
+</main>
+
+
+{% endblock %}
