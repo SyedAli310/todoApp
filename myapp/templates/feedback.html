@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<title>BinJer - Feedback</title>
+<style>
+
+.info-msg{
+    transition: letter-spacing ease 300ms;
+}
+.info-msg:nth-child(1){
+  animation: spacing 1.5s ease;
+}
+.info-msg:nth-child(2){
+  animation: spacing 1.5s ease;
+}
+.info-msg:hover{
+    letter-spacing: 2.5px;
+}
+@keyframes spacing {
+  0%{
+    letter-spacing: normal;
+  }
+  50%{
+    letter-spacing: 4px;
+  }
+  100%{
+    letter-spacing: normal;
+  }
+}
+
+</style>
+
+<main class="px-4">
+
+  <div class="hero text-center">
+    <p class="info-msg display-2 theme-change-text text-dark">
+        Hey there,
+    </p>
+     
+    <p class="info-msg display-6" style="color: coral;">
+        Feedback is coming Soon... 
+    </p>
+  </div>
+  <p class="text-muted text-center mt-5 pt-5">Send any queries here - <a href = "mailto: alizaidi310@gmail.com">alizaidi310@gmail.com</a></p>
+  
+</main>
+
+{% endblock %}
+

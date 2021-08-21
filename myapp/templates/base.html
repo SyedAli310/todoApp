@@ -21,34 +21,48 @@
     crossorigin="anonymous"
     />
 
+    <script src="https://unpkg.com/minigrid@3.1.1/dist/minigrid.min.js"></script>
+
+
+    <link rel="icon" href="{% static 'img/logo.png' %}" type="image/icon type">
 
     <style>
         
       @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
       body{
         font-family: 'Poppins', sans-serif;
-        
       }
+      
       .body-bg-change{
         background: #1b1b1b;
+      }
+      html {
+        scroll-behavior: smooth !important;
+      }
+      main{
+        min-height: 90vh !important;
       }
       .navbar{
         border-bottom: 1px solid coral;
         box-shadow: 0.5px 1px 12px #1b1b1b;
       }
+      
         .nav-link{
             color: coral !important;
+            border-radius: 0px 2.5px 2.5px 0px;
             transition: all ease 300ms;
         }
+
         .nav-item:hover{
-            filter: brightness(1.5);
-            background: rgb(255, 127, 80,0.5);
+            background: coral;
             border-radius: 2.5px;
         }
         .nav-item:hover .nav-link{
-            transform:translateX(15px);
-            color: white !important;
-            
+            transform:translate(15px);
+            color: snow !important;
+            /* background: rgb(27, 27, 27,.95); */
+            background: #1b1b1b; 
         }
         .navbar-brand{
             color: white !important;
@@ -79,6 +93,7 @@
             transform: translateX(0px);
           }
         }
+        
         #dark-mode-btn:focus{
           outline: none !important;
           box-shadow: none !important;
@@ -91,6 +106,8 @@
           border-radius: 0px 0px 4px 4px !important;
           border: 0.5px solid snow;
           z-index: 100;
+          padding-top: 4px;
+          transition: all ease 300ms;
         }
     </style>            
     <!-- <i class="fas fa-tasks fa-lg "></i> -->
@@ -105,27 +122,28 @@
           <ul class="w-100 navbar-nav mr-4 d-flex justify-content-end" style="gap:20px;">
             <li><hr class="bg-secondary rounded"></li>            
             <li class="nav-item">
-              <a class="nav-link" href="/">Home</a>
+              <a class="nav-link" href="/"><i class="fas fa-home"></i> Home</a>
             </li>
             <li class="nav-item">
               {% if user.is_authenticated %}
-              <a class="nav-link" href="/dashboard/">Dashboard</a>
+              <a class="nav-link" href="/dashboard/"><i class="fas fa-table"></i> Dashboard</a>
               {% else %}
-              <a class="nav-link" href="#">Features</a>
+              <a class="nav-link" href="#features"><i class="fas fa-project-diagram"></i> Features</a>
               {% endif %}
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/feedback/"><i class="fas fa-comment-dots"></i> Feedback</a>
             </li>
             <li class="nav-item">
               {% if user.is_authenticated %}
               <a class="nav-link" href="#"><i class="fas fa-user-alt">&nbsp;{{user.username}}</i></a>
-              {% else %}
-              <a class="nav-link" href="/pricing">Pricing</a>
               {% endif %}
             </li>
             <li><hr class="bg-secondary rounded"></li>
           </ul>
           <span class="navbar-buttons d-flex justify-content-center align-items-center">
             {% if user.is_authenticated %}
-            <a href="/logout" class="btn btn-danger btn-sm"><i class="fas fa-sign-out-alt">&nbsp;Signout</i></a>
+            <a href="/logout" class="btn btn-danger btn-sm"><i class="fas fa-power-off">&nbsp;Signout</i></a>
             {% else %}
             <a href="/login" class="btn btn-outline-success btn-sm" style="color: white !important;">Login/Signup</a>
             {% endif %}
@@ -133,16 +151,16 @@
         </div>
     </nav>
 
-    <div id="dark-mode-btn-container">
-      <button class="btn btn-sm" id="dark-mode-btn"><i class="fas fa-moon"></i></button>
+    <div id="dark-mode-btn-container" title="Change Theme">
+      <button class="btn btn-sm" id="dark-mode-btn"><i class="theme-change-icon text-warning fas fa-moon"></i><span class="px-1 theme-change-text text-light" id="theme-info"></span></button>
     </div>
 
     {% block content %}
 
 
     {% endblock %}
-    
     <footer class="px-4 mt-5 mb-2 text-center">
+      <hr class="theme-change-div bg-dark">
       <i class="far fa-copyright text-muted">-BinJer -2021</i>
       <br>
       <p class="text-muted">Built in - <span style="opacity: 0.8;"><a  class="text-success" href="https://www.djangoproject.com/" target="_blank">django</a></span></p>
@@ -152,6 +170,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     
+    
+
     <script>
       $(document).ready(()=>{
 
@@ -172,16 +192,18 @@
 
             $('body').toggleClass('body-bg-change')
             
+            document.documentElement.style.setProperty('--dark-nav-hover', '#FFF');
+            
             for(let i=0; i<divs.length;i++){
               divs[i].classList.toggle('bg-dark');
+              divs[i].classList.toggle('bg-light');
             }
             for(let i=0; i<texts.length;i++){
               texts[i].classList.toggle('text-white');   
               texts[i].classList.toggle('text-dark');   
             }
             for(let i=0; i<icons.length;i++){
-              icons[i].classList.toggle('text-light');
-                
+              icons[i].classList.toggle('text-light');  
             }
         }
 
@@ -193,27 +215,35 @@
 
             if($('#dark-mode-btn i').hasClass('fa-sun')){
               localStorage.setItem('isDark','false');
+              $('#theme-info').text('Light')
+              
             }
             if($('#dark-mode-btn i').hasClass('fa-moon')){
               localStorage.setItem('isDark','true');
+              $('#theme-info').text('Dark')
+              
             }
         })
 
 
         function checkTheme(){
           if(localStorage.getItem('isDark')=='true'){
-            
             changeTheme();
             $('#dark-mode-btn i').removeClass('fa-sun')
             $('#dark-mode-btn i').addClass('fa-moon')
+            $('#theme-info').text('Dark')
+            
+
           }
           else{
-            
             $('#dark-mode-btn i').toggleClass('fa-moon fa-sun')
+            $('#theme-info').text('Light')
+            
+
           }
         }
 
-        window.onload=checkTheme();
+      window.onload=checkTheme();
 
       $(".dropdown-menu li a").click(function () {
         localStorage.setItem("filter", $(this).text());
@@ -223,9 +253,9 @@
         $("#filter-val").text(localStorage.getItem("filter"));
         console.log("filter:", localStorage.getItem("filter"));
       };
-
       })
 
     </script>
+
 </body>
 </html>

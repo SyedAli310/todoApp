@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+
+
 # Create your models here.
 
 class TODO(models.Model):
@@ -9,14 +11,14 @@ class TODO(models.Model):
         ('Pending', 'Pending')
     ]
     priority_choices=[
-        ('1','1️⃣'),
-        ('2','2️⃣'),
-        ('3','3️⃣'),
-        ('4','4️⃣'),
-        ('5','5️⃣'),
+        ('1','1️'),
+        ('2','2️'),
+        ('3','3️'),
+        ('4','4️'),
+        ('5','5️'),
     ]
-    title = models.CharField(max_length=300)
+    title = models.CharField(max_length=50)
     status = models.CharField(max_length=10 , choices=status_choices)
-    date = models.DateTimeField(auto_now_add=True)
+    date = models.DateTimeField()
     priority = models.CharField(max_length=5 , choices=priority_choices)
     user = models.ForeignKey(User, on_delete = models.CASCADE)

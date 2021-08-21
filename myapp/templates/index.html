@@ -30,25 +30,57 @@
     transform: rotate(360deg);
   }
 }
+#bin-ls{
+  transition: all ease 300ms;
+}
+#bin-ls:hover{
+  letter-spacing: 2.5px;
+}
+
 </style>
 <main class="p-4">
   <div class="hero text-center">
     {% if user.is_authenticated %}
     <h1 class="theme-change-text text-dark">Welcome, <span class="text-primary">{{user.username}}</span></h1>
     {% else %}
-    <h1 class="theme-change-text text-dark">Never miss out on work with <u><b style="color: coral;">BinJer</b></u></h1>
+    <h1 class="theme-change-text text-dark">Never miss out on work with <u><b id="bin-ls" style="color: coral;">BinJer</b></u></h1>
     {% endif %}
     <h5 class="theme-change-text text-dark">Organize your tasks and stay ahead on your day.</h5>
+    <p class="theme-change-text text-dark text-muted">A simple ToDo application to ease your planning</p>
     <br><br>
-    <p class="theme-change-text text-dark">A simple ToDo application to ease your planning</p>
-    <br><br>
-    <p class="text-muted"><i>Let's get you started with your ToDos</i>,</p>
-    <a href="/dashboard" class="btn" style="background: coral;">Go to Dashboard&nbsp;<i class="fas fa-arrow-right"></i></a>
-    <hr class="theme-change-div bg-light rounded">
-    <h4 class="theme-change-text mt-4 text-dark"><i>Happy <span class="text-primary"><b>{{day}}</b></span></i></h4>
+    {% if user.is_authenticated %}
+    <div class="">
+      <span class="display-4 text-nowrap" style="color: coral; font-weight: bold;">{{todoCount}}<span class="theme-change-text text-dark" style="font-size: 15px; font-weight: lighter;">ToDo(s) Added</span></span>
+      &nbsp;
+      <span class="display-4 text-nowrap" style="color: coral; font-weight: bold;">{{todoPendingCount}}<span class="theme-change-text text-dark" style="font-size: 15px; font-weight: lighter;">ToDo(s) Pending</span></span>
+    </div>
+    {% endif %}
+    
+    <p class="text-muted small"><i>Let's get you started with your ToDos</i>,</p>
+    <a href="/dashboard" class="btn theme-change-text text-dark" style="background: coral;">Go to Dashboard&nbsp;<i class="fas fa-arrow-right"></i></a>
+    <hr class="theme-change-div bg-dark rounded">
+    <h4 class="theme-change-text mt-4 text-dark"><i>Happy <span class="text-warning">{{day}}</span></i></h4>
+  </div>
+  <br>
+
+  <div id="features" style="margin-top:30vh;">
+    <h1 class="text-center theme-change-text text-dark"><u>Features</u></h1>
+    <br>
+    <div class="w-100 row d-flex justify-content-around align-items-center">
+      <div class="card col-md-3 bg-transparent rounded m-2">
+        <img class="img-thumbnail img-fluid bg-transparent border-0" src="{% static 'img/1.png' %}" alt="One">
+      </div>
+      <div class="card col-md-3 bg-transparent rounded m-2">
+        <img class="img-thumbnail img-fluid bg-transparent border-0" src="{% static 'img/2.png' %}" alt="One">
+      </div>
+      <div class="card col-md-3 bg-transparent rounded m-2">
+        <img class="img-thumbnail img-fluid bg-transparent border-0" src="{% static 'img/3.png' %}" alt="One">
+      </div>
+    </div>
   </div>
   
 </main>
+
 
 {% endblock %}
 

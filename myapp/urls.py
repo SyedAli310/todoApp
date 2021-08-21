@@ -12,5 +12,6 @@ urlpatterns = [
     path('add_todo/',views.add_todo, name='add_todo'),
     path('delete_todo/<int:id>',views.delete_todo, name='delete_todo'),
     path('change_status/<int:id>/<str:status>',views.change_status, name='change_status'),
-    path('pricing/', views.pricing, name='pricing' )
+    path('searchTodo/',views.searchTodo, name='searchTodo'),
+    path('feedback/', views.feedback, name='feedback' )
 ]
