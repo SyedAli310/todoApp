@@ -18,7 +18,7 @@ SECRET_KEY = 'django-insecure-2w1x7zv^uj)h@p!=$!&0f8r(_!-=eaf3^7cl%a_z00ujiu!wu-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['todo-app-binjer.heroku.com']
+ALLOWED_HOSTS = ['todoApp.heroku.com']
 
 
 # Application definition
@@ -116,7 +116,7 @@ USE_TZ = True
 
 STATIC_ROOT = (os.path.join(BASE_DIR , 'static'),)
 STATIC_URL = '/static/'
-dajngo_heroku.settings(locals())
+django_heroku.settings(locals())
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
