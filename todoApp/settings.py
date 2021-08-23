@@ -3,6 +3,7 @@
 from pathlib import Path
 
 import os
+import django_heroku
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -17,7 +18,7 @@ SECRET_KEY = 'django-insecure-2w1x7zv^uj)h@p!=$!&0f8r(_!-=eaf3^7cl%a_z00ujiu!wu-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['todo-app-binjer.heroku.com']
 
 
 # Application definition
@@ -68,11 +69,11 @@ WSGI_APPLICATION = 'todoApp.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'todoApp',
-        'USER': 'postgres',
-        'PASSWORD': 'Syedali310@lpu',
-        'HOST': 'localhost',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'dcpnil27erb4g1',
+        'USER': 'qsgsbuwkkjefsy',
+        'PASSWORD': 'bb7840f06febf36294e79d550b0bbdcf096a3646e77e854041e9c589c40b8422',
+        'HOST': 'ec2-35-153-91-18.compute-1.amazonaws.com',
     }
 }
 
@@ -113,9 +114,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
+STATIC_ROOT = (os.path.join(BASE_DIR , 'static'),)
 STATIC_URL = '/static/'
-
-STATICFILES_DIRS = (os.path.join(BASE_DIR , 'static'),)
+dajngo_heroku.settings(locals())
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
