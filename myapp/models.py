@@ -17,7 +17,7 @@ class TODO(models.Model):
         ('4','4️'),
         ('5','5️'),
     ]
-    title = models.CharField(max_length=100)
+    title = models.CharField(max_length=255)
     status = models.CharField(max_length=10 , choices=status_choices)
     date = models.DateTimeField()
     priority = models.CharField(max_length=5 , choices=priority_choices)
