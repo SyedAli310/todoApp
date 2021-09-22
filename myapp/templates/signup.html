@@ -3,7 +3,7 @@
 {% block content %}
 <title>BinJer - Singup</title>
 <main class="p-4">
-        <div  class="col-lg-5 shadow mx-auto p-0 rounded bg-light">
+        <div  class="col-lg-5 shadow mx-auto p-0 rounded theme-change-div bg-light">
             <div class="alert alert-success"><h2>Create an account</h2></div>
             {% for message in messages %}
               <p class="text-danger text-center">{{message}}</p>
@@ -11,24 +11,24 @@
             <form action="/signup/" method="POST" class="px-4 pb-2">
             {% csrf_token %}
             <div class="form-group">
-                <label for="inputUsername">Username <i class="fas fa-info-circle text-secondary" data-toggle="tooltip" data-placement="right" title="Only numbers and letters allowed"></i></label>
+                <label for="inputUsername" class="theme-change-text text-dark">Username <i class="fas fa-info-circle text-secondary" data-toggle="tooltip" data-placement="right" title="Only numbers and letters allowed"></i></label>
                 <input type="text" name="username" class="form-control" required id="inputUsername" placeholder="Enter a username...">
             </div>
             <div class="form-group">
-                <label for="inputEmail">Email <i class="fas fa-info-circle text-secondary" data-toggle="tooltip" data-placement="right" title="Enter a valid email"></i></label>
+                <label for="inputEmail" class="theme-change-text text-dark">Email <i class="fas fa-info-circle text-secondary" data-toggle="tooltip" data-placement="right" title="Enter a valid email"></i></label>
                 <input type="email" name="email" class="form-control" required id="inputEmail" placeholder="Enter your email...">
             </div>
             <div class="form-group">
-                <label for="inputPassword">Password <i class="fas fa-info-circle text-secondary" data-toggle="tooltip" data-placement="right" title="Must be at least 8 characters"></i></label>
+                <label for="inputPassword" class="theme-change-text text-dark">Password <i class="fas fa-info-circle text-secondary" data-toggle="tooltip" data-placement="right" title="Must be at least 8 characters"></i></label>
                 <input type="password" name="password" class="form-control" required id="inputPassword" placeholder="Enter a password...">
             </div>
             <div class="form-group">
-                <label for="inputPassword2">Repeat Password <i class="fas fa-info-circle text-secondary" data-toggle="tooltip" data-placement="right" title="Enter the password again"></i></label>
+                <label for="inputPassword2" class="theme-change-text text-dark">Repeat Password <i class="fas fa-info-circle text-secondary" data-toggle="tooltip" data-placement="right" title="Enter the password again"></i></label>
                 <input type="password" name="password2" class="form-control" required id="inputPassword2" placeholder="Enter password again...">
             </div>
 
             <div class="form-group">
-                <input type="checkbox" onclick="showPass()">&nbsp;Show Password
+                <input type="checkbox" onclick="showPass()">&nbsp;<span class="theme-change-text text-dark small">Show Password</span> 
                 <br><br>
                 <input class="btn btn-success" type="submit" value="Create Account">
             </div>

@@ -3,7 +3,7 @@
 {% block content %}
 <title>BinJer - Login</title>
 <main class="p-4">
-    <div  class="col-lg-5 shadow mx-auto p-0 rounded bg-light">
+    <div  class="col-lg-5 shadow mx-auto p-0 rounded theme-change-div bg-light">
         <div class="alert alert-primary"><h2>Login to your account</h2></div>
         {% for message in messages %}
           <p class="text-danger text-center">{{message}}</p>
@@ -11,14 +11,14 @@
         <form action="/login/" method="POST" class="px-4 pb-2">
         {% csrf_token %}
         <div class="form-group">
-            <label for="inputUsername">Username</label>
+            <label for="inputUsername" class="theme-change-text text-dark">Username</label>
             <input type="text" name="username" class="form-control" id="inputUsername" required placeholder="Enter a username...">
         </div>
         <div class="form-group">
-            <label for="inputPassword">Password</label>
+            <label for="inputPassword" class="theme-change-text text-dark">Password</label>
             <input type="password" name="password" class="form-control" id="inputPassword" required placeholder="Enter a password...">
             <br>
-            <input type="checkbox" onclick="showPass()">&nbsp;Show Password 
+            <input type="checkbox" onclick="showPass()">&nbsp;<span class="theme-change-text text-dark small">Show Password </span>
         </div>
        
         <div class="form-group">
