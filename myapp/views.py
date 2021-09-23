@@ -3,11 +3,10 @@ from django.contrib.auth.models import User, auth
 from django.contrib import messages
 from django.http import HttpResponse
 from myapp.models import TODO
-
+#---------------------------------------------------#
 import datetime
 from datetime import date
 import calendar
-
 
 def home(request):
     my_date = date.today()
@@ -38,8 +37,7 @@ def signup(request):
                 messages.info(request, 'Username already taken')
                 return redirect('signup')
             else:
-                user = User.objects.create_user(
-                    username=username, email=email, password=password)
+                user = User.objects.create_user(username=username, email=email, password=password)
                 user.save()
                 return redirect('login')
         else:
