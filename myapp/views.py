@@ -106,7 +106,6 @@ def add_todo(request):
         status = request.POST['status']
         priority = request.POST['priority']
         date = datetime.datetime.now()
-        
         if status == 'Select Status':
             messages.info(request, 'Please select status')
             return redirect('dashboard')  
